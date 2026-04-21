@@ -21,4 +21,4 @@ RUN mkdir -p /run/nginx
 
 EXPOSE 8080
 
-CMD sh -c "php artisan config:cache && php artisan migrate --force && php-fpm -D && nginx -g 'daemon off;'"
+CMD sh -c "php artisan config:cache && php artisan migrate --force && php-fpm -D && nginx -t && nginx -g 'daemon off;'"
