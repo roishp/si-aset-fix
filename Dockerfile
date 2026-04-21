@@ -21,4 +21,10 @@ RUN mkdir -p /run/nginx
 
 EXPOSE 8080
 
-CMD sh -c "php artisan config:cache && php artisan migrate --force && php-fpm -D && nginx -t && nginx -g 'daemon off;'"
+RUN apk add --no-cache gettext
+
+CMD sh -c "envsubst '\$PORT' < /etc/nginx/nginx.conf > /tmp/nginx.conf && \
+    php artisan config:cache && \
+    php artisan migrate --force && \
+    php-fpm -D && \
+    nginx -c /tmp/nginx.conf -g 'daemon off;'"
